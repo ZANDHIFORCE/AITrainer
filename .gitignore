@@ -1,0 +1,14 @@
+# Python 가상환경 디렉터리
+venv/
+env/
+
+# Python 캐시 파일
+__pycache__/
+*.pyc
+*.pyo
+
+# 기타 IDE 관련 파일
+.idea/
+.vscode/
+*.swp
+.DS_Store
