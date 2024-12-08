@@ -9,7 +9,8 @@ app = Flask(__name__)
 def index():
     return '''
         <form action="/process" method="post">
-            <label for="image_url">이미지 URL 입력:</label>
+            <h1>AiTrainer</h1>
+            <label for="image_url">스쿼트 이미지 URL 입력:</label>
             <input type="text" id="image_url" name="image_url" required>
             <button type="submit">전송</button>
         </form>
