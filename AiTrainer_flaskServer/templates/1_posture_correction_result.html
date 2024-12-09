@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Posture Correction</h2>
+<img src="{{ image_url }}" alt="입력된 이미지" style="max-width: 100%; height: auto;">
+<h3>[result]</h3>
+<p>{{ output }}</p>
+<a href="/posture">Re-enter</a>
+{% endblock %}

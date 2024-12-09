@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Intensity Recommendation</h2>
+<form action="/calculate" method="post">
+    <label for="gender">Gender:</label><br>
+    <select id="gender" name="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select><br><br>
+
+    <label for="weight">Weight (kg):</label><br>
+    <input type="number" id="weight" name="weight" step="0.1" required><br><br>
+
+    <label for="height">Height (cm):</label><br>
+    <input type="number" id="height" name="height" step="0.1" required><br><br>
+
+    <label for="smm">My SMM (kg):</label><br>
+    <input type="number" id="smm" name="smm" step="0.1" required><br><br>
+
+    <button type="submit">Calculate</button>
+</form>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Posture Correction</h2>
+<form action="/process" method="post">
+    <label for="image_url">Enter Squat Image URL:</label>
+    <input type="text" id="image_url" name="image_url" required>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

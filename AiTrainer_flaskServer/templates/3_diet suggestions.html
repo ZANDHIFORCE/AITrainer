@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Diet Suggestion</h2>
+<form action="/process_2" method="post">
+    <label for="muscle_mass">Enter Your Skeletal Muscle Mass (kg):</label><br>
+    <input type="number" id="muscle_mass" name="muscle_mass" step="0.1" required><br><br>
+
+    <label for="foods">Enter foods containing protein.(You can list multiple items)</label><br>
+    <input type="text" id="foods" name="foods" required><br><br>
+
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
