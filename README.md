@@ -5,6 +5,21 @@
 
 본 프로젝트는 현대인의 건강한 운동 습관 형성을 돕기 위해 개발된 **통합 AI 홈 트레이닝 솔루션**입니다. 기존 AI 운동 분석 시스템의 한계를 극복하기 위해 컴퓨터 비전 기술과 거대 언어 모델(LLM)의 멀티모달 기능을 결합하여 높은 정밀도의 자세 교정 및 개인 맞춤형 가이드를 제공합니다.
 
+# 비교모델
+1. 딥러닝 기반 포즈 추정 모델: Teachable Machine
+<img width="480" height="345" alt="image" src="https://github.com/user-attachments/assets/9cc82aa3-9757-4416-af3c-e178fd962cc6" />
+<img width="277" height="283" alt="image" src="https://github.com/user-attachments/assets/fbfea461-99c1-41dc-a6b6-be1041482723" />
+
+
+2. 규칙 기반 포즈 추정 모델: Mediapipe
+<img width="480" height="309" alt="image" src="https://github.com/user-attachments/assets/a7e8bcd3-d361-4d66-a1e4-fa402daaebdd" />
+<img width="477" height="380" alt="image" src="https://github.com/user-attachments/assets/ddab5ce8-0b94-4ffb-ab8b-232b51864fdc" />
+
+
+3. ChatGpt4o 기반 추정 모델: ChatGpt4o
+<img width="720" height="911" alt="image" src="https://github.com/user-attachments/assets/a2dcdc2a-dc83-494f-8ece-df49c87c6316" />
+
+
 ---
 
 ## 🚀 핵심 연구 및 기능
@@ -46,9 +61,19 @@
 | **Improved ChatGPT (최종)** | **0.962** | **0.925** | **0.929** | **0.912** |
 
 - **주요 발견**: ChatGPT 모델에 **전문 용어 활용(영문)**, **시스템 역할 부여**, **최신 트레이닝 데이터셋**을 적용했을 때 MediaPipe 대비 약 10% 이상의 성능 향상을 보였습니다.
+<img width="1444" height="253" alt="image" src="https://github.com/user-attachments/assets/34b7a898-4962-4cb5-baee-454d3bb82f28" />
 
 ---
 
+## Flask 기반 웹서비스
+
+<img width="882" height="763" alt="image" src="https://github.com/user-attachments/assets/e67ba586-6b09-43f0-ae6c-6ee952920225" />
+
+<img width="591" height="267" alt="image" src="https://github.com/user-attachments/assets/b6c65851-d24b-4b80-8f02-dd60395865b7" />
+
+<img width="786" height="675" alt="image" src="https://github.com/user-attachments/assets/e620a31d-22c2-45db-bbfb-3f9cdf513784" />
+
+---
 ## 📂 프로젝트 구조
 
 ```text
