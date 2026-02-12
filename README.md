@@ -5,20 +5,16 @@
 
 본 프로젝트는 현대인의 건강한 운동 습관 형성을 돕기 위해 개발된 **통합 AI 홈 트레이닝 솔루션**입니다. 기존 AI 운동 분석 시스템의 한계를 극복하기 위해 컴퓨터 비전 기술과 거대 언어 모델(LLM)의 멀티모달 기능을 결합하여 높은 정밀도의 자세 교정 및 개인 맞춤형 가이드를 제공합니다.
 
-# 비교모델
-1. 딥러닝 기반 포즈 추정 모델: Teachable Machine
-<img width="480" height="345" alt="image" src="https://github.com/user-attachments/assets/9cc82aa3-9757-4416-af3c-e178fd962cc6" />
-<img width="277" height="283" alt="image" src="https://github.com/user-attachments/assets/fbfea461-99c1-41dc-a6b6-be1041482723" />
+---
 
+## 🧐 모델 비교 및 문제 해결 (Motivation)
+기존 모델들의 한계를 분석하고, 이를 GPT-4o로 극복한 과정입니다.
 
-2. 규칙 기반 포즈 추정 모델: Mediapipe
-<img width="480" height="309" alt="image" src="https://github.com/user-attachments/assets/a7e8bcd3-d361-4d66-a1e4-fa402daaebdd" />
-<img width="477" height="380" alt="image" src="https://github.com/user-attachments/assets/ddab5ce8-0b94-4ffb-ab8b-232b51864fdc" />
-
-
-3. ChatGpt4o 기반 추정 모델: ChatGpt4o
-<img width="720" height="911" alt="image" src="https://github.com/user-attachments/assets/a2dcdc2a-dc83-494f-8ece-df49c87c6316" />
-
+| 1. Teachable Machine (딥러닝) | 2. MediaPipe (규칙 기반) | 3. GPT-4o (제안 모델) |
+| :---: | :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/9cc82aa3-9757-4416-af3c-e178fd962cc6" width="250"> | <img src="https://github.com/user-attachments/assets/a7e8bcd3-d361-4d66-a1e4-fa402daaebdd" width="250"> | <img src="https://github.com/user-attachments/assets/2c4f7736-c87c-466b-b319-6d8136f393c5" width="250"> |
+| **한계점** | **한계점** | **해결** |
+| 단순 이미지 분류만 가능하며,<br>관절의 디테일한 각도 파악 불가 | 좌표 기반 계산은 정확하나,<br>복잡한 척추 정렬 등 문맥 파악 불가 | **멀티모달 시각 추론**을 통해<br>미세한 자세 교정 및 원인 분석 가능 |
 
 ---
 
@@ -65,13 +61,12 @@
 
 ---
 
-## Flask 기반 웹서비스
+실제 구축된 웹 서비스 인터페이스입니다.
 
-<img width="882" height="763" alt="image" src="https://github.com/user-attachments/assets/e67ba586-6b09-43f0-ae6c-6ee952920225" />
-
-<img width="591" height="267" alt="image" src="https://github.com/user-attachments/assets/b6c65851-d24b-4b80-8f02-dd60395865b7" />
-
-<img width="786" height="675" alt="image" src="https://github.com/user-attachments/assets/e620a31d-22c2-45db-bbfb-3f9cdf513784" />
+| 메인 인터페이스 | GPT 분석 결과 화면 | 맞춤형 가이드 제공 |
+| :---: | :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/e67ba586-6b09-43f0-ae6c-6ee952920225" width="300"> | <img src="https://github.com/user-attachments/assets/b6c65851-d24b-4b80-8f02-dd60395865b7" width="300"> | <img src="https://github.com/user-attachments/assets/e620a31d-22c2-45db-bbfb-3f9cdf513784" width="300"> |
+| 사용자는 사진을 업로드하고<br>자신의 신체 정보를 입력합니다. | AI가 자세를 분석하고<br>문제점을 즉시 진단합니다. | 진단 결과에 따른 운동 팁과<br>식단을 추천합니다. |
 
 ---
 ## 📂 프로젝트 구조
