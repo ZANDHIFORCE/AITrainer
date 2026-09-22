@@ -40,6 +40,7 @@ flowchart TD
     G --> R[결과 템플릿]
     M --> R
     I --> R
+    classDef default fill:#eff6ff,stroke:#2563eb,color:#172554
 ```
 
 ### 01. 웹 입력부터 AI 응답까지 연결
