@@ -1,106 +1,111 @@
-# AI Trainer for Fitness Beginners (초보를 위한 AI 피트니스 트레이너) 🏋️‍♂️
+# AI Trainer
 
-> **Kyung Hee University, School of Computing**  
-> **저자**: 조동휘 (DongHwee Cho), 성무진 (Mujeen Sung)
+**운동 사진의 URL을 입력받아 자세 분석 결과와 운동·식단 가이드를 제공하는 Flask 서비스**
 
-본 프로젝트는 현대인의 건강한 운동 습관 형성을 돕기 위해 개발된 **통합 AI 홈 트레이닝 솔루션**입니다. 기존 AI 운동 분석 시스템의 한계를 극복하기 위해 컴퓨터 비전 기술과 거대 언어 모델(LLM)의 멀티모달 기능을 결합하여 높은 정밀도의 자세 교정 및 개인 맞춤형 가이드를 제공합니다.
+![Python](https://img.shields.io/badge/Language-Python-2563EB?style=flat-square)
+![Flask](https://img.shields.io/badge/Web-Flask-2563EB?style=flat-square)
+![GPT-4o](https://img.shields.io/badge/Posture-GPT--4o-2563EB?style=flat-square)
+![GPT-4o-mini](https://img.shields.io/badge/Diet-GPT--4o--mini-2563EB?style=flat-square)
 
----
+**개인 개발** · 조동휘: 서비스 설계·구현 · 연구 자료의 저자 정보는 하단에 표기
 
-## 🧐 모델 비교 및 문제 해결 (Motivation)
-기존 모델들의 한계를 분석하고, 이를 GPT-4o로 극복한 과정입니다.
+[서비스 화면](#서비스-화면) · [구현 구조](#구현-구조) · [모델 비교](#모델-비교와-연구-기록) · [실행 방법](docs/SETUP.md)
 
-| 1. Teachable Machine (딥러닝) | 2. MediaPipe (규칙 기반) | 3. GPT-4o (제안 모델) |
-| :---: | :---: | :---: |
-| <img src="https://github.com/user-attachments/assets/9cc82aa3-9757-4416-af3c-e178fd962cc6" width="250"> | <img src="https://github.com/user-attachments/assets/a7e8bcd3-d361-4d66-a1e4-fa402daaebdd" width="250"> | <img src="https://github.com/user-attachments/assets/2c4f7736-c87c-466b-b319-6d8136f393c5" width="250"> |
-| **한계점** | **한계점** | **해결** |
-| 단순 이미지 분류만 가능하며,<br>관절의 디테일한 각도 파악 불가 | 좌표 기반 계산은 정확하나,<br>복잡한 척추 정렬 등 문맥 파악 불가 | **멀티모달 시각 추론**을 통해<br>미세한 자세 교정 및 원인 분석 가능 |
+## 서비스 화면
 
----
+<a href="Result_img/Servic_Img/결과화면.jpg"><img src="Result_img/Servic_Img/결과화면.jpg" width="480" alt="개발 당시 웹 화면: 입력한 스쿼트 사진과 Shallow Squat 분류 및 이유를 함께 표시한 자세 분석 결과"></a>
 
-## 🚀 핵심 연구 및 기능
+*개발 당시 자세 분석 결과 화면입니다. 원본 이미지를 열어 응답 내용을 확인할 수 있습니다.*
 
-### 1. 지능형 자세 교정 (Posture Correction)
-기존의 랜드마크 기반 모델(MediaPipe)과 이미지 분류 모델(Teachable Machine)의 약점을 보완하기 위해 **GPT-4o Vision**을 활용한 하이브리드 분석을 수행합니다.
+## 프로젝트 개요
 
-- **분석 알고리즘**: **Improved ChatGPT (Few-shot Learning)**
-  - 각 클래스별 5개의 고품질 트레이닝 데이터셋을 활용한 실시간 학습.
-  - 시스템 역할(Role) 부여 및 영문 추론 후 한글 번역 방식을 통해 정확도 극대화.
-- **판단 기준 (4 Classes)**:
-  - **Shallow Squat**: 가동 범위 부족 (허벅지와 지면의 수평 여부)
-  - **Knee Valgus**: 무릎 모임 (안쪽으로 굽어지는 현상)
-  - **Wrong Spinal Alignment**: 잘못된 척추 정렬 (척추 중립 위반)
-  - **Right Form**: 올바른 자세
+운동 초보자가 자신의 스쿼트 자세를 이해할 수 있도록 이미지와 예시 데이터를 외부 AI API에 전달하고 결과를 웹 화면으로 보여줍니다.
 
-### 2. 과학적 운동 강도 추천 (Intensity Recommendation)
-단순한 추측이 아닌, 학술적 근거와 정량적 데이터를 바탕으로 적정 중량을 제안합니다.
+- **자세 분석**: 접근 가능한 운동 이미지 URL과 예시 이미지를 GPT-4o에 전달하여 자세 분류·설명을 생성합니다.
+- **운동 강도**: 성별·체중·키·골격근량을 서버의 계산 규칙에 적용하여 수준과 스쿼트 중량을 제안합니다.
+- **식단 제안**: 골격근량·보유 식재료를 GPT-4o-mini에 전달하여 식단 응답을 생성합니다.
 
-- **골격근량(SMM) 산출**: `Lee et al. (2000)`의 공식을 활용하여 신체 데이터를 바탕으로 추정.
-  - *남성*: $SMM = 0.244 \times 체중 + 7.8 \times 키(m) - 2.2$
-  - *여성*: $SMM = 0.197 \times 체중 + 7.2 \times 키(m) - 2.5$
-- **중량 설계**: `Strength Level` 데이터를 벤치마킹하여 사용자 수준별(Beginner/Novice) 1RM 기반 스쿼트 중량 추천.
+## 구현 구조
 
-### 3. 개인화 식단 제안 (Diet Suggestions)
-- **모델**: GPT-4o-mini
-- **로직**: 사용자의 골격근량 대비 필수 단백질 섭취량을 계산하고, 가정 내 보유 중인 식재료를 활용한 최적의 식단 조합을 생성합니다.
-
----
-
-## 📊 모델 성능 비교 및 연구 결과 (Ablation Study)
-
-본 연구에서는 최적의 성능을 도출하기 위해 다양한 모델 비교와 요소 분석을 진행했습니다.
-
-| 모델 | 정밀도(Precision) | 재현율(Recall) | F1 Score | 정확도(Accuracy) |
-| :--- | :---: | :---: | :---: | :---: |
-| MediaPipe Pose | 0.862 | 0.825 | 0.829 | 0.812 |
-| Plain ChatGPT | 0.740 | 0.525 | 0.450 | 0.525 |
-| **Improved ChatGPT (최종)** | **0.962** | **0.925** | **0.929** | **0.912** |
-
-- **주요 발견**: ChatGPT 모델에 **전문 용어 활용(영문)**, **시스템 역할 부여**, **최신 트레이닝 데이터셋**을 적용했을 때 MediaPipe 대비 약 10% 이상의 성능 향상을 보였습니다.
-<img width="1444" height="253" alt="image" src="https://github.com/user-attachments/assets/34b7a898-4962-4cb5-baee-454d3bb82f28" />
-
----
-
-실제 구축된 웹 서비스 인터페이스입니다.
-
-| 메인 인터페이스 | GPT 분석 결과 화면 | 맞춤형 가이드 제공 |
-| :---: | :---: | :---: |
-| <img src="https://github.com/user-attachments/assets/e67ba586-6b09-43f0-ae6c-6ee952920225" width="300"> | <img src="https://github.com/user-attachments/assets/b6c65851-d24b-4b80-8f02-dd60395865b7" width="300"> | <img src="https://github.com/user-attachments/assets/e620a31d-22c2-45db-bbfb-3f9cdf513784" width="300"> |
-| 사용자는 사진을 업로드하고<br>자신의 신체 정보를 입력합니다. | AI가 자세를 분석하고<br>문제점을 즉시 진단합니다. | 진단 결과에 따른 운동 팁과<br>식단을 추천합니다. |
-
----
-## 📂 프로젝트 구조
-
-```text
-├── AiTrainer_flaskServer/      # Flask 기반 웹 서비스 인터페이스
-│   ├── app.py                  # 메인 서버 및 비즈니스 로직
-│   ├── ask2GTP_posture.py      # Improved ChatGPT 자세 분석 엔진
-│   └── ask2GTP_diet.py         # 영양학적 식단 생성 엔진
-├── models_code/                # 모델 비교 연구 코드
-│   ├── mediapipe/              # MediaPipe 기반 포즈 추출 모듈
-│   └── Trained_ChatGPT_API/    # GPT 모델 최적화 실험 스크립트
-├── squat_img/                  # 연구에 사용된 Few-shot 데이터셋
-├── Result_img/                 # 연구 결과 그래프 및 인터페이스 캡처
-└── AI Trainer for Fitness Beginner_조동휘.pdf # 연구 상세 보고서
+```mermaid
+flowchart TD
+    U[사용자 입력] --> F[Flask 라우트]
+    F --> P[자세 분석 스크립트]
+    F --> I[운동 강도 계산]
+    F --> D[식단 제안 스크립트]
+    P --> G[GPT-4o]
+    D --> M[GPT-4o-mini]
+    G --> R[결과 템플릿]
+    M --> R
+    I --> R
+    classDef default fill:#eff6ff,stroke:#2563eb,color:#172554
 ```
 
----
+### 01. 웹 입력부터 AI 응답까지 연결
 
-## 🛠 설치 및 실행 방법
+Flask는 폼 값을 받아 별도 Python 스크립트를 실행하고, 표준 출력으로 받은 결과를 템플릿에 전달합니다. 자세 분석의 입력은 **파일 업로드가 아닌 이미지 URL**입니다.
 
-1. **의존성 설치**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. **API 키 설정**:
-   환경 변수에 `OPENAI_API_KEY`를 등록하세요.
-3. **서버 실행**:
-   ```bash
-   cd AiTrainer_flaskServer
-   python app.py
-   ```
+[Flask 라우트](AiTrainer_flaskServer/app.py) · [자세 분석](AiTrainer_flaskServer/ask2GTP_posture.py) · [식단 제안](AiTrainer_flaskServer/ask2GTP_diet.py)
 
----
+### 02. 예시 이미지로 판단 기준 제공
 
-## 🎓 학술적 의의
-본 프로젝트는 LLM의 멀티모달 능력을 도메인 특화 데이터(Few-shot)와 결합했을 때, 기존의 특화된 비전 모델보다 더 유연하고 정확한 분석이 가능함을 입증하였습니다. 특히 복잡한 정렬(Spinal Alignment) 문제에서 뛰어난 성능을 보입니다.
+자세 분석 요청에 클래스별 5장, 총 20장의 예시 이미지를 포함합니다. 모델의 가중치를 다시 학습시키는 방식이 아니라, 요청 문맥에 예시를 제공하는 **Few-shot prompting**입니다.
+
+| 분류 | 의미 |
+| :--- | :--- |
+| Shallow Squat | 가동 범위 부족 |
+| Knee Valgus | 무릎이 안쪽으로 모이는 자세 |
+| Wrong Spinal Alignment | 척추 정렬 문제 |
+| Right Form | 올바른 자세 |
+
+### 03. 연구 코드와 서비스 코드 구분
+
+`models_code`에는 모델과 프롬프트 조건을 비교한 실험 코드가 있습니다. `AiTrainer_flaskServer`는 사용자의 입력을 받아 결과를 보여주는 서비스입니다. MediaPipe와 GPT 결과를 실시간으로 합치는 앙상블 서비스로 구현된 것은 아닙니다.
+
+## 모델 비교와 연구 기록
+
+아래 수치는 **기존 README에 기록된 연구 보고값**입니다. 이번 문서 정리에서 모델 호출을 다시 실행하거나 집계값을 재산출하지 않았습니다.
+
+| 모델 | Precision | Recall | F1 | Accuracy |
+| :--- | ---: | ---: | ---: | ---: |
+| MediaPipe Pose | 0.862 | 0.825 | 0.829 | 0.812 |
+| Plain ChatGPT | 0.740 | 0.525 | 0.450 | 0.525 |
+| **Improved ChatGPT** | **0.962** | **0.925** | **0.929** | **0.912** |
+
+기존 표 기준 정확도 차이는 **81.2% → 91.2%, +10.0%p**입니다. 이 결과를 모든 운동·사용자·촬영 조건으로 일반화하지 않습니다.
+
+- 저장소의 데이터: 클래스별 예시 5장, 평가 이미지 10장
+- 평가 스크립트: 클래스별 10장을 한 요청에 전달하는 구조
+- 최종 표의 반복 실행 횟수·평균 방식은 별도 확인이 필요합니다.
+
+[평가 스크립트](models_code/Trained_ChatGPT_API/5_Improved_ChatGPT.py) · [평가 원본 파일](Model_evaluation_result.xlsx) · [결과 이미지](Result_img/Output_results_for_each_model)
+
+## 실행과 검증
+
+[설치·실행 안내](docs/SETUP.md)에서 가상환경, API 키, 서버 실행, 입력 형식을 확인할 수 있습니다. [검증 기록](docs/VALIDATION.md)은 로컬 화면 확인과 실제 AI 호출 검증을 구분합니다.
+
+## 현재 한계와 다음 개선
+
+- 외부 API 응답을 기다리는 동기 처리입니다. 타임아웃과 실패 시 사용자 안내를 보강할 필요가 있습니다.
+- 이미지 URL 검증, 입력 검증, 결과 구조화를 개선할 예정입니다.
+- 호출마다 예시 이미지가 포함되므로 지연 시간과 호출 비용 측정이 필요합니다.
+- 운동·식단 응답은 연구용 가이드이며 개인의 신체 상태에 대한 검증된 진단을 의미하지 않습니다.
+
+## 연구 자료
+
+**Kyung Hee University, School of Computing**<br>
+연구 자료 저자: 조동휘(DongHwee Cho), 성무진(Mujeen Sung)
+
+[연구 보고서](AI%20Trainer%20for%20Fitness%20Beginner_조동휘.pdf) · [발표 자료](AI%20Trainer%20for%20Fitness%20Beginner_조동휘.pptx)
+
+<details>
+<summary>프로젝트 구조</summary>
+
+```text
+AiTrainer_flaskServer/  웹 라우트, AI 호출 스크립트, 템플릿
+models_code/           MediaPipe 및 GPT 비교 실험
+squat_img/             예시·평가 이미지
+Result_img/            실험 결과와 개발 당시 화면
+```
+
+</details>
