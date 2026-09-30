@@ -9,7 +9,7 @@
 
 **개인 개발** · 조동휘: 서비스 설계·구현 · 연구 자료의 저자 정보는 하단에 표기
 
-[서비스 화면](#서비스-화면) · [구현 구조](#구현-구조) · [모델 비교](#모델-비교와-연구-기록) · [실행 방법](docs/SETUP.md)
+[서비스 화면](#서비스-화면) · [구현 구조](#구현-구조) · [프로젝트 구조](#project-structure) · [모델 비교](#모델-비교와-연구-기록) · [실행 방법](docs/SETUP.md)
 
 ## 서비스 화면
 
@@ -61,6 +61,28 @@ Flask는 폼 값을 받아 별도 Python 스크립트를 실행하고, 표준 �
 ### 03. 연구 코드와 서비스 코드 구분
 
 `models_code`에는 모델과 프롬프트 조건을 비교한 실험 코드가 있습니다. `AiTrainer_flaskServer`는 사용자의 입력을 받아 결과를 보여주는 서비스입니다. MediaPipe와 GPT 결과를 실시간으로 합치는 앙상블 서비스로 구현된 것은 아닙니다.
+
+<a id="project-structure"></a>
+
+## 📂 프로젝트 구조
+
+주요 코드와 문서만 표시했습니다.
+
+```text
+AITrainer/
+├── AiTrainer_flaskServer/  # Flask 웹 서비스
+│   ├── app.py  # 웹 라우트·운동 강도 계산
+│   ├── ask2GTP_posture.py  # 자세 분석 API 호출
+│   ├── ask2GTP_diet.py  # 식단 제안 API 호출
+│   └── templates/  # 입력·결과 화면
+├── models_code/  # 모델·프롬프트 비교 실험
+├── squat_img/  # 자세별 예시 이미지
+├── old_squat_img/  # 이전 예시 이미지
+├── Result_img/  # 평가 결과·서비스 화면
+├── Model_evaluation_result.xlsx  # 평가 원본 자료
+├── docs/  # 실행 안내·검증 기록
+└── requirements.txt  # Python 의존성
+```
 
 ## 모델 비교와 연구 기록
 
@@ -125,14 +147,3 @@ Flask는 폼 값을 받아 별도 Python 스크립트를 실행하고, 표준 �
 
 [연구 보고서](AI%20Trainer%20for%20Fitness%20Beginner_조동휘.pdf) · [발표 자료](AI%20Trainer%20for%20Fitness%20Beginner_조동휘.pptx)
 
-<details>
-<summary>프로젝트 구조</summary>
-
-```text
-AiTrainer_flaskServer/  웹 라우트, AI 호출 스크립트, 템플릿
-models_code/           MediaPipe 및 GPT 비교 실험
-squat_img/             예시·평가 이미지
-Result_img/            실험 결과와 개발 당시 화면
-```
-
-</details>
