@@ -4,7 +4,7 @@
 
 ## 준비
 
-Python과 가상환경을 준비합니다. 웹 서비스의 직접 의존성은 Flask와 OpenAI SDK이며, 루트 `requirements.txt`에는 모델 비교 실험용 라이브러리도 포함되어 있습니다. 기존 의존성 파일의 버전은 고정되어 있지 않습니다.
+Python과 가상환경을 준비합니다. 웹 서비스의 직접 의존성은 Flask와 OpenAI SDK입니다. 루트 `requirements.txt`는 `web/requirements.txt`를 포함하며 웹 의존성의 버전은 고정되어 있지 않습니다.
 
 ```bash
 git clone https://github.com/ZANDHIFORCE/AITrainer.git
@@ -27,10 +27,19 @@ source .venv/bin/activate
 웹 서비스만 실행할 때:
 
 ```bash
-python -m pip install flask openai
+python -m pip install -r requirements.txt
 ```
 
-모델 비교 실험까지 준비할 때는 별도 환경에서 `python -m pip install -r requirements.txt`를 실행하고 각 실험의 의존성과 호환성을 확인하세요.
+모델 비교 실험은 별도 환경에서 준비합니다. [GPT 실험 의존성](../experiments/gpt/requirements.txt)과 [MediaPipe 실험 의존성](../experiments/mediapipe/requirements.txt)은 기존 실험 환경의 버전 기록입니다. 현재 Python·운영체제와의 설치 호환성은 다시 검증하지 않았습니다.
+
+```bash
+# GPT 실험
+python -m pip install -r experiments/gpt/requirements.txt
+# MediaPipe 실험 (별도 가상환경)
+python -m pip install -r experiments/mediapipe/requirements.txt
+```
+
+GPT 실험 파일은 `experiment_01_trained_chatgpt.py`부터 `experiment_06_service_chatgpt.py`까지 기존 번호를 유지했습니다. MediaPipe의 `app.py`는 원래 함께 보관된 `experiments/mediapipe/squat_img` 이미지를 읽습니다. 루트의 `data/squat`으로 대체하지 않았습니다.
 
 ## API 키 설정
 
@@ -49,11 +58,24 @@ export OPENAI_API_KEY="<your-api-key>"
 ## 서버 실행
 
 ```bash
-cd AiTrainer_flaskServer
-python app.py
+python web/app.py
 ```
 
-`http://127.0.0.1:5000`에 접속합니다. 스크립트가 상대 경로로 실행되므로 반드시 `AiTrainer_flaskServer` 안에서 실행하세요. 현재 진입점은 Flask 디버그 모드이며 로컬 개발 확인용입니다.
+저장소 루트에서 실행하고 `http://127.0.0.1:5000`에 접속합니다. AI 스크립트와 템플릿 경로는 `web/app.py` 위치를 기준으로 찾습니다. 다른 폴더에서는 `app.py`의 절대 경로로 실행할 수 있습니다. 현재 진입점은 Flask 디버그 모드이며 로컬 개발 확인용입니다.
+
+## 예시 이미지 경로
+
+자세 분석과 GPT 실험은 GitHub의 `data/squat`, `data/legacy_squat` 이미지를 URL로 전달합니다. 기본 브랜치는 `main`이며, 구조 변경 PR을 확인할 때는 해당 브랜치를 지정합니다.
+
+```powershell
+$env:AITRAINER_ASSET_REF = "codex/structure-cleanup"
+```
+
+```bash
+export AITRAINER_ASSET_REF="codex/structure-cleanup"
+```
+
+새 경로는 선택한 브랜치가 원격에 올라간 뒤 접근할 수 있습니다. 병합 뒤에는 환경변수를 해제하여 기본 `main`을 사용합니다. 로컬 경로 확인과 외부 URL 접근·실제 AI 호출 확인은 구분합니다.
 
 | 경로 | 기능 |
 | :--- | :--- |

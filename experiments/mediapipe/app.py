@@ -1,6 +1,7 @@
 import cv2
 import time
-import PoseModule as pm
+import pose_module as pm
+from pathlib import Path
 import math
 
 def getXY(img, coord):
@@ -80,7 +81,7 @@ for folder in folders_name:
     print(temp_str)
     for i in range(1,11):
         
-        file_name = "squat_img\\"+folder+"\\test set\\"+str(i)+".jpg"
+        file_name = str(Path(__file__).resolve().parent / "squat_img" / folder / "test set" / (str(i)+".jpg"))
         cap = cv2.VideoCapture(file_name) #"squat3.mp4" or 1
         pTime = 0
         detector = pm.poseDetector(model_complexity=1)
