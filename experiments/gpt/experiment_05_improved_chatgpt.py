@@ -1,3 +1,5 @@
+import os
+from urllib.parse import quote
 from openai import OpenAI
 
 def get_url(base_url, class_number, usage, image_number):
@@ -19,8 +21,10 @@ def append_image(content_list, url):
     content_list.append(image_dic)
     
 client = OpenAI()
+    
+asset_ref = quote(os.environ.get("AITRAINER_ASSET_REF", "main"), safe="/")
+url_head = f"https://raw.githubusercontent.com/ZANDHIFORCE/AITrainer/refs/heads/{asset_ref}/data/squat/"
 
-url_head = "https://raw.githubusercontent.com/ZANDHIFORCE/AITrainer/refs/heads/main/old_squat_img/"
 
 classes_name={
     1 :"Shallow Squat",
@@ -31,13 +35,13 @@ classes_name={
 
 #Training model
 training_content=[]
-append_text(training_content,"너한테 4개의 클래스를 학습시킬거야 클래스별 training set은 5장씩 줄거야.")
+append_text(training_content,"I will train you on four classes, and for each class, I will provide a training set of 5 images.")
 append_text(training_content,"1. Shallow Squat, 2. Knee Valgus, 3. Wrong Spinal Alignment, 4.Right Form")
 for class_number in range(1,5):
-    append_text(training_content, classes_name[class_number] + "클래스 training set 5장을 알려줄께")
+    append_text(training_content, "I'll provide you with 5 images for the " + classes_name[class_number] + " class training set.")
     for image_number in range(1,6):
         append_image(training_content, get_url(url_head, class_number, "training", image_number))
-append_text(training_content, "학습이 완료되었으니, 사진 10장에 하나씩 어느 클래스에 해당하는지 알려줘")
+append_text(training_content, "Provide 10 photos and identify which class each photo belongs to one by one.")
 append_text(training_content, "ex) 5. **Right Form**")
 
 response_list=[]
@@ -52,6 +56,10 @@ for class_number in range(1,5):
     model="gpt-4o",
     messages=[
         {
+            "role": "system", 
+            "content": "make sure to provide the answer the user wants."
+        },
+        {
             "role": "user",
             "content": training_content
         },
@@ -62,10 +70,8 @@ for class_number in range(1,5):
     ],
     max_tokens=1000,
     )
-    print(response.choices[0].message.content)
-    print("#######################################")
-    #response_list.append(response.choices[0].message.content)
+    response_list.append(response.choices[0].message.content)
 
-# for x in response_list:
-#     print(x)
-#     print("#######################################")
+for x in response_list:
+    print(x)
+    print("#######################################")

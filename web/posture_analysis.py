@@ -1,3 +1,5 @@
+import os
+from urllib.parse import quote
 import sys
 from openai import OpenAI
 
@@ -23,7 +25,8 @@ def append_image(content_list, url):
 
 if __name__ == "__main__":
     
-    url_head = "https://raw.githubusercontent.com/ZANDHIFORCE/AITrainer/refs/heads/main/squat_img/"
+    asset_ref = quote(os.environ.get("AITRAINER_ASSET_REF", "main"), safe="/")
+    url_head = f"https://raw.githubusercontent.com/ZANDHIFORCE/AITrainer/refs/heads/{asset_ref}/data/squat/"
 
     classes_name={
         1 :"Shallow Squat",

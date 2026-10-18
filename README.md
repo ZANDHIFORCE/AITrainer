@@ -13,7 +13,7 @@
 
 ## 서비스 화면
 
-<a href="Result_img/Servic_Img/결과화면.jpg"><img src="Result_img/Servic_Img/결과화면.jpg" width="480" alt="개발 당시 웹 화면: 입력한 스쿼트 사진과 Shallow Squat 분류 및 이유를 함께 표시한 자세 분석 결과"></a>
+<a href="docs/assets/screenshots/결과화면.jpg"><img src="docs/assets/screenshots/결과화면.jpg" width="480" alt="개발 당시 웹 화면: 입력한 스쿼트 사진과 Shallow Squat 분류 및 이유를 함께 표시한 자세 분석 결과"></a>
 
 *개발 당시 자세 분석 결과 화면입니다. 원본 이미지를 열어 응답 내용을 확인할 수 있습니다.*
 
@@ -45,7 +45,7 @@ flowchart TD
 
 Flask는 폼 값을 받아 별도 Python 스크립트를 실행하고, 표준 출력으로 받은 결과를 템플릿에 전달합니다. 자세 분석의 입력은 **파일 업로드가 아닌 이미지 URL**입니다.
 
-[Flask 라우트](AiTrainer_flaskServer/app.py) · [자세 분석](AiTrainer_flaskServer/ask2GTP_posture.py) · [식단 제안](AiTrainer_flaskServer/ask2GTP_diet.py)
+[Flask 라우트](web/app.py) · [자세 분석](web/posture_analysis.py) · [식단 제안](web/diet_advice.py)
 
 ### 02. 예시 이미지로 판단 기준 제공
 
@@ -60,7 +60,7 @@ Flask는 폼 값을 받아 별도 Python 스크립트를 실행하고, 표준 �
 
 ### 03. 연구 코드와 서비스 코드 구분
 
-`models_code`에는 모델과 프롬프트 조건을 비교한 실험 코드가 있습니다. `AiTrainer_flaskServer`는 사용자의 입력을 받아 결과를 보여주는 서비스입니다. MediaPipe와 GPT 결과를 실시간으로 합치는 앙상블 서비스로 구현된 것은 아닙니다.
+`experiments`에는 모델과 프롬프트 조건을 비교한 실험 코드가 있습니다. `web`은 사용자의 입력을 받아 결과를 보여주는 서비스입니다. MediaPipe와 GPT 결과를 실시간으로 합치는 앙상블 서비스로 구현된 것은 아닙니다.
 
 <a id="project-structure"></a>
 
@@ -70,23 +70,28 @@ Flask는 폼 값을 받아 별도 Python 스크립트를 실행하고, 표준 �
 
 ```text
 AITrainer/
-├── AiTrainer_flaskServer/  # Flask 웹 서비스
+├── web/  # Flask 웹 서비스
 │   ├── app.py  # 웹 라우트·운동 강도 계산
-│   ├── ask2GTP_posture.py  # 자세 분석 API 호출
-│   ├── ask2GTP_diet.py  # 식단 제안 API 호출
+│   ├── posture_analysis.py  # 자세 분석 API 호출
+│   ├── diet_advice.py  # 식단 제안 API 호출
+│   ├── requirements.txt  # 웹 서비스 의존성
 │   └── templates/  # 입력·결과 화면
-├── models_code/  # 모델·프롬프트 비교 실험
-├── squat_img/  # 자세별 예시 이미지
-├── old_squat_img/  # 이전 예시 이미지
-├── Result_img/  # 평가 결과·서비스 화면
-├── Model_evaluation_result.xlsx  # 평가 원본 자료
-├── docs/  # 실행 안내·검증 기록
-└── requirements.txt  # Python 의존성
+├── experiments/
+│   ├── gpt/  # 번호별 모델·프롬프트 비교 실험
+│   └── mediapipe/  # Pose 실험·기존 실험용 이미지
+├── data/
+│   ├── squat/  # 자세별 예시 이미지
+│   └── legacy_squat/  # 이전 예시 이미지
+├── docs/
+│   ├── reports/  # 연구 보고서·발표 자료
+│   ├── evaluation/  # 평가 원본·결과 이미지
+│   └── assets/  # 서비스 화면·기타 기록 이미지
+└── requirements.txt  # 웹 의존성 설치
 ```
 
 ## 모델 비교와 연구 기록
 
-아래 수치는 [연구 보고서](AI%20Trainer%20for%20Fitness%20Beginner_조동휘.pdf)의 **4~6쪽 표에 기록된 보고값**입니다. 4개 자세 유형에 대해 클래스별 10장, 총 40장의 평가 이미지를 사용했습니다. 이번 문서 수정에서는 실험을 다시 실행하거나 원시 결과를 재집계하지 않았습니다.
+아래 수치는 [연구 보고서](docs/reports/AI%20Trainer%20for%20Fitness%20Beginner_조동휘.pdf)의 **4~6쪽 표에 기록된 보고값**입니다. 4개 자세 유형에 대해 클래스별 10장, 총 40장의 평가 이미지를 사용했습니다. 이번 문서 수정에서는 실험을 다시 실행하거나 원시 결과를 재집계하지 않았습니다.
 
 ### 모델별 비교
 
@@ -127,7 +132,7 @@ AITrainer/
 - 반복 실행 횟수와 실행 간 변동성은 논문에서 확인되지 않습니다.
 - 이 결과는 해당 이미지 평가셋에서의 보고값이며, 모든 운동·사용자·촬영 조건의 성능으로 일반화하지 않습니다.
 
-[평가 스크립트](models_code/Trained_ChatGPT_API/5_Improved_ChatGPT.py) · [평가 원본 파일](Model_evaluation_result.xlsx) · [결과 이미지](Result_img/Output_results_for_each_model)
+[평가 스크립트](experiments/gpt/experiment_05_improved_chatgpt.py) · [평가 원본 파일](docs/evaluation/Model_evaluation_result.xlsx) · [결과 이미지](docs/evaluation/Output_results_for_each_model)
 
 ## 실행과 검증
 
@@ -145,5 +150,5 @@ AITrainer/
 **Kyung Hee University, School of Computing**<br>
 연구 자료 저자: 조동휘(DongHwee Cho), 성무진(Mujeen Sung)
 
-[연구 보고서](AI%20Trainer%20for%20Fitness%20Beginner_조동휘.pdf) · [발표 자료](AI%20Trainer%20for%20Fitness%20Beginner_조동휘.pptx)
+[연구 보고서](docs/reports/AI%20Trainer%20for%20Fitness%20Beginner_조동휘.pdf) · [발표 자료](docs/reports/AI%20Trainer%20for%20Fitness%20Beginner_조동휘.pptx)
 

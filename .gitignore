@@ -2,6 +2,7 @@
 venv/
 env/
 myvenv/
+.venv/
 
 # Python 캐시 파일
 __pycache__/

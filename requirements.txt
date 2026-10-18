@@ -1,5 +1,2 @@
-flask
-openai
-opencv-python
-mediapipe
-numpy
+# 웹 서비스 의존성
+-r web/requirements.txt

@@ -1,8 +1,10 @@
 from flask import Flask, request, render_template
 import sys
 import subprocess
+from pathlib import Path
 
 app = Flask(__name__)
+web_dir = Path(__file__).resolve().parent
 
 # HTML 폼 페이지
 @app.route('/')
@@ -12,17 +14,17 @@ def index():
 # 자세교정
 @app.route('/posture')
 def posture():
-    return render_template('1_posture_correction.html')
+    return render_template('posture.html')
 
 # 강도추천
 @app.route('/intensity')
 def intensity():
-    return render_template('2_intensity_recommendation.html')
+    return render_template('intensity.html')
 
 # 식단제안
 @app.route('/diet')
 def diet():
-    return render_template('3_diet suggestions.html')
+    return render_template('diet.html')
 
 
 #자세교정과정
@@ -31,7 +33,7 @@ def process():
     image_url = request.form['image_url']
     try:
         result = subprocess.run(
-            [ sys.executable, 'ask2GTP_posture.py', image_url],
+            [ sys.executable, str(web_dir / 'posture_analysis.py'), image_url],
             capture_output=True, text=True
         )
         
@@ -42,7 +44,7 @@ def process():
     except Exception as e:
         output = f"Exception occurred: {e}"
     
-    return render_template('1_posture_correction_result.html', image_url=image_url, output=output)
+    return render_template('posture_result.html', image_url=image_url, output=output)
 
 #골격근계산 및 스쿼트 강도 추천
 @app.route('/calculate', methods=['POST'])
@@ -71,7 +73,7 @@ def calculate():
     except Exception as e:
         result = f"Error: {e}"
 
-    return render_template('2_intensity_recommendation_result.html', result=result)
+    return render_template('intensity_result.html', result=result)
 
 @app.route('/process_2', methods=['POST'])
 def process_2():
@@ -80,7 +82,7 @@ def process_2():
     
     try:
         result = subprocess.run(
-            [sys.executable, 'ask2GTP_diet.py', muscle_mass, foods],
+            [sys.executable, str(web_dir / 'diet_advice.py'), muscle_mass, foods],
             capture_output=True, text=True
         )
 
@@ -92,7 +94,7 @@ def process_2():
         output = f"Exception occurred: {e}"
 
     # 결과 페이지로 출력값 전달
-    return render_template('3_diet suggestions_result.html', muscle_mass=muscle_mass, foods=foods, output=output)
+    return render_template('diet_result.html', muscle_mass=muscle_mass, foods=foods, output=output)
     
 
 
