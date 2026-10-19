@@ -27,19 +27,10 @@
 
 ## 구현 구조
 
-```mermaid
-flowchart TD
-    U[사용자 입력] --> F[Flask 라우트]
-    F --> P[자세 분석 스크립트]
-    F --> I[운동 강도 계산]
-    F --> D[식단 제안 스크립트]
-    P --> G[GPT-4o]
-    D --> M[GPT-4o-mini]
-    G --> R[결과 템플릿]
-    M --> R
-    I --> R
-    classDef default fill:#eff6ff,stroke:#2563eb,color:#172554
-```
+<picture>
+  <source media="(max-width: 1000px)" srcset="docs/assets/service-flow-mobile.svg">
+  <img src="docs/assets/service-flow.svg" alt="기능별 입력 → Flask → 자세 분석·강도 계산·식단 제안 → 결과 화면">
+</picture>
 
 ### 01. 웹 입력부터 AI 응답까지 연결
 
@@ -160,4 +151,5 @@ AITrainer/
 연구 자료 저자: 조동휘(DongHwee Cho), 성무진(Mujeen Sung)
 
 [연구 보고서](docs/reports/AI%20Trainer%20for%20Fitness%20Beginner_조동휘.pdf) · [발표 자료](docs/reports/AI%20Trainer%20for%20Fitness%20Beginner_조동휘.pptx)
+
 
