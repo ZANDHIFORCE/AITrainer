@@ -1,3 +1,4 @@
+# 실행 위치·데이터 경로 검증
 import contextlib
 import io
 import os
