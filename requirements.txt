@@ -1,2 +1,2 @@
-# 웹 서비스 의존성
+# 웹 서비스 의존성 설치
 -r web/requirements.txt
