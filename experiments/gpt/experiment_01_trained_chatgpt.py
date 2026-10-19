@@ -1,3 +1,4 @@
+# 예시 이미지를 제공한 GPT 자세 분석 실험
 import os
 from urllib.parse import quote
 from openai import OpenAI
