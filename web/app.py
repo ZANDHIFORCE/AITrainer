@@ -1,3 +1,4 @@
+# 자세 분석·운동 강도·식단 안내
 from flask import Flask, request, render_template
 import sys
 import subprocess
