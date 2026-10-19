@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="500" viewBox="0 0 440 500" role="img" aria-labelledby="title">
+<title id="title">입력 기능에 따라 Flask에서 자세 분석(GPT-4o), 운동 강도 계산, 식단 제안(GPT-4o-mini)을 각각 실행하고 결과 화면 표시</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/></marker></defs>
+<g font-family="'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif">
+<rect x="1" y="1" width="438" height="498" rx="18" fill="#f8fafc" stroke="#e2e8f0"/>
+<rect x="60" y="24" width="320" height="62" rx="12" fill="#fff" stroke="#cbd5e1"/>
+<text x="220.0" y="61.8" text-anchor="middle" font-size="20" fill="#334155" font-weight="600">입력</text>
+<rect x="60" y="132" width="320" height="62" rx="12" fill="#fff" stroke="#cbd5e1"/>
+<text x="220.0" y="169.8" text-anchor="middle" font-size="20" fill="#334155" font-weight="600">Flask</text>
+<path d="M 220 94 V 124" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 220 202 V 228 H 70 V 252" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="16" y="260" width="108" height="82" rx="12" fill="#f0fdfa" stroke="#5eead4"/>
+<text x="70.0" y="294.44" text-anchor="middle" font-size="16" fill="#0f766e" font-weight="600">자세</text>
+<text x="70.0" y="318.44" text-anchor="middle" font-size="16" fill="#0f766e" font-weight="600">GPT-4o</text>
+<path d="M 70 350 V 374 H 220 V 406" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 220 202 V 228 H 220 V 252" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="166" y="260" width="108" height="82" rx="12" fill="#fff" stroke="#cbd5e1"/>
+<text x="220.0" y="294.44" text-anchor="middle" font-size="16" fill="#334155" font-weight="600">운동</text>
+<text x="220.0" y="318.44" text-anchor="middle" font-size="16" fill="#334155" font-weight="600">강도 계산</text>
+<path d="M 220 350 V 374 H 220 V 406" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 220 202 V 228 H 370 V 252" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="316" y="260" width="108" height="82" rx="12" fill="#f0fdfa" stroke="#5eead4"/>
+<text x="370.0" y="294.44" text-anchor="middle" font-size="16" fill="#0f766e" font-weight="600">식단</text>
+<text x="370.0" y="318.44" text-anchor="middle" font-size="16" fill="#0f766e" font-weight="600">GPT-4o-mini</text>
+<path d="M 370 350 V 374 H 220 V 406" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="60" y="414" width="320" height="62" rx="12" fill="#fff" stroke="#cbd5e1"/>
+<text x="220.0" y="451.8" text-anchor="middle" font-size="20" fill="#334155" font-weight="600">결과 화면</text>
+</g></svg>
