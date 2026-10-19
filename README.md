@@ -1,5 +1,7 @@
 # AI Trainer
 
+<!-- 프로젝트 개요·구현 흐름·실행 안내 -->
+
 **운동 사진의 URL을 입력받아 자세 분석 결과와 운동·식단 가이드를 제공하는 Flask 서비스**
 
 ![Python](https://img.shields.io/badge/Language-Python-2563EB?style=flat-square)
